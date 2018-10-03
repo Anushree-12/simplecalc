@@ -6,6 +6,12 @@
 //  Copyright © 2017 Neward & Associates. All rights reserved.
 //
 
+// How do I initalize the array? And add the elements from the substring (from other method) to that array?
+// What is the method below doing? With the map...
+// Should I be returning values in the array method? Or creating a new variable and saving the final answer into that? I think return
+//For count, avg, fact, can I remove the last element so I can iterate through the entire array, or can I iterate size-1 times?
+// To iterate through the whole array for actual calculator code, how do I increment array index?
+
 import Foundation
 
 public class Calculator {
@@ -13,68 +19,67 @@ public class Calculator {
         // not sure how to initialize the array
         // args += calculate? add each susbtring character into the args array or ars.append(calculate)
         // for each substring in calculate
-        var array = [String]()
-        let size = array.count
+        let array = args
         
-        if array[size - 1] == "count" {
-            if size != 1 {
-                for _ in array {
-                    return size - 1
+        if array.last == "count" {
+            var count = 0
+            // How do I cast the strings to integers?
+            for (index, element) in array.enumerate() {
+                if element != "count" {
+                    count = count + 1
                 }
-            } else {
-                return 0 // am i supposed to be returning values? or creating a new var?
-            }
-        } else if array[size - 1] == "avg" {
-            if size != 1 {
-                for _ in array {
-                // go through all elements except the last one (can i remove the last element, which is the word and then just iterate through all the elements?) and then average them. UPDATE SIZE IF REMOVING LAST ELEMENT
-                    let avgArray = avgArray.reduce(0, +)
-                    let avgValue = avgArray / size
-                }
-            } else {
-                return 0
-            }
-        } else if array[size - 1] == "fact" {
-            if size != 1 {
-                for _ in array {
-                    let factNum = array[0]
-                    if factNum == 0 || 1 {
-                        return 1
-                    }
-                    let factorial =
-                }
-            } else {
-                return 0
+            return count
             }
         }
-        
-        for _ in size { // for (index, element) in array.enumerate() {
-            var first = array[0]
-            var operation = [1]
-            var second = [2]
-            var new = 0
-            if operation == "+" {
-                new = first + second
-                } else if operation == "-" {
-                new = first - second
-            } else if operation == "*" {
-                new = first * second
-                } else if operation == "/" {
-                new = first / second
-            } else if operation == "%" {
-                new = first % second
+            else if array.last == "avg" {
+            var avg = 0
+            var avgValue = 0
+            for (index, element) in array.enumerate() {
+                avg = avg.reduce(0, +)
+                avgValue = avg / array.count
             }
-            first = new
-            second = array[index + 2] // increment index
-            operation = array[index + 2] // how do I increment the index?
+            return avgValue
+        } else if array.last == "fact" {
+            var factorial = 1
+            for (index, element) in array.enumerate() {
+                while element > 1 {
+                    factorial = factorial * element
+                    element = element - 1
+                }
+            }
+            return factorial
             
         }
         
+        var arrayNum = 0
+        var operation = ""
+        var result = 0
+        
+        for (index, element) in array.enumerate() {
+            if index % 2 == 0 {
+                arrayNum = element
+            } else {
+                operation = element
+            }
+
+            if index != 0 || index != 1 && index % 2 == 0 {
+                if operation == "+" {
+                    result = result + arrayNum
+                } else if operation == "-" {
+                    result = result - arrayNum
+                } else if operation == "*" {
+                    result = result * arrayNum
+                    } else if operation == "/" {
+                    result = result / arrayNum
+                } else if operation == "%" {
+                    result = result % arrayNum
+                }
+            }
+        }
+        return result
     }
     
     public func calculate(_ arg: String) -> Int {
-        // how do i read each substring and then turn it into an int?
-        // do i turn the numbers into an int in the other function if that is possible? or should i cast the first, and second var into Int?
         return calculate( arg.split(separator: " ").map({ substr in String(substr) }) )
     }
 }
