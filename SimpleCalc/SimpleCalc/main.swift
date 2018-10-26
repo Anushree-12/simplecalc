@@ -12,30 +12,34 @@ public class Calculator {
     public func calculate(_ args: [String]) -> Int {
         
         let prevNumber = Int(args[0])
-
         
         if args.last == "count" {
-            return args.count
+            return args.count - 1
         } else if args.last == "avg" {
-            var avgNum: Int = 0
-            for i in args {
-                while args.last != "avg" {
-                    avgNum = avgNum + Int(i)!
-                }
+            if args.count < 2 {
+                return 0
             }
-            return avgNum / args.count
+            var avgNumber: Int = 0
+            for i in 0...args.count - 2 {
+                avgNumber = avgNumber + Int(args[i])!
+            }
+            return Int(avgNumber) / Int(args.count - 1)
         } else if args.last == "fact" {
-            if prevNumber == 0 || args.count == 1 {
+            if prevNumber == 0 {
                 return 1
-            } else {
+            }
+            if args.count == 1 {
+                return 0
+            }
+            if args.count > 1 {
                 var num = 1
-                for i in 1...Int(prevNumber!) {
+                for i in 1...Int(args[0])! {
                     num = num * i
                 }
                 return num
             }
         }
-        
+
         let operation = args[1]
         let currentNumber = Int(args[2])
         
